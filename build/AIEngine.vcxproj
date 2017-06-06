@@ -19,27 +19,38 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\AIEngine.h" />
+    <ClInclude Include="..\src\GameObject.h" />
+    <ClInclude Include="..\src\GameObjectManager.h" />
+    <ClInclude Include="..\src\Message.h" />
+    <ClInclude Include="..\src\MessageQueue.h" />
+    <ClInclude Include="..\src\Resource.h" />
+    <ClInclude Include="..\src\stdafx.h" />
+    <ClInclude Include="..\src\targetver.h" />
+    <ClInclude Include="..\src\Utils.h" />
+    <ClInclude Include="..\src\Vec2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\src\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="..\src\AIEngine.ico" />
     <Image Include="..\src\small.ico" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\AIEngine.cpp" />
+    <ClCompile Include="..\src\GameObject.cpp" />
+    <ClCompile Include="..\src\GameObjectManager.cpp" />
+    <ClCompile Include="..\src\Message.cpp" />
+    <ClCompile Include="..\src\MessageQueue.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\AIEngine.h" />
-    <ClInclude Include="..\src\Resource.h" />
-    <ClInclude Include="..\src\stdafx.h" />
-    <ClInclude Include="..\src\targetver.h" />
+    <ClCompile Include="..\src\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\AIEngine.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\src\ReadMe.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{31C8B3B9-03D4-44FB-B629-EDB6A440B137}</ProjectGuid>
