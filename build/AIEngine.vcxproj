@@ -27,6 +27,7 @@
     <ClInclude Include="..\src\Message.h" />
     <ClInclude Include="..\src\MessageQueue.h" />
     <ClInclude Include="..\src\MovingGameObject.h" />
+    <ClInclude Include="..\src\PrecisionTimer.h" />
     <ClInclude Include="..\src\Resource.h" />
     <ClInclude Include="..\src\stdafx.h" />
     <ClInclude Include="..\src\targetver.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="..\src\Message.cpp" />
     <ClCompile Include="..\src\MessageQueue.cpp" />
     <ClCompile Include="..\src\MovingGameObject.cpp" />
+    <ClCompile Include="..\src\PrecisionTimer.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

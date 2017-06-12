@@ -16,7 +16,6 @@ Agent::~Agent()
 
 void Agent::Update(double deltaTime)
 {
-	
 }
 
 void Agent::Render()

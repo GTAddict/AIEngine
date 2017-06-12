@@ -5,6 +5,7 @@
 #include "AIEngine.h"
 #include "World.h"
 #include "Cgdi.h"
+#include "PrecisionTimer.h"
 
 #define MAX_LOADSTRING 100
 
@@ -47,6 +48,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
+	PrecisionTimer timer;
+	timer.SmoothUpdatesOn();
+	timer.Start();
+
 	bool bDone = false;
 
 	while (!bDone)
@@ -70,7 +75,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		if (msg.message != WM_QUIT)
 		{
-			g_World->Update(0.1);
+			g_World->Update(timer.TimeElapsed());
 			InvalidateRect(hWnd, NULL, false);
 			UpdateWindow(hWnd);
 			Sleep(2);
