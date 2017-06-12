@@ -3,17 +3,17 @@
 #include <limits>
 #include <cmath>
 
-double LowestDouble()
+inline double LowestDouble()
 {
 	return std::numeric_limits<double>::lowest();
 }
 
-double Epsilon()
+inline double Epsilon()
 {
 	return std::numeric_limits<double>::epsilon();
 }
 
-bool AreEqual(double a, double b)
+inline bool AreEqual(double a, double b)
 {
 	double difference = fabs(b - a);
 	double epsilon = std::numeric_limits<float>::epsilon();
@@ -21,7 +21,7 @@ bool AreEqual(double a, double b)
 	return difference < epsilon && difference > -epsilon;
 }
 
-bool IsPositive(double x)
+inline bool IsPositive(double x)
 {
 	return x > std::numeric_limits<float>::epsilon();
 }

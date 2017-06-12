@@ -3,17 +3,21 @@
 
 #include "stdafx.h"
 #include "AIEngine.h"
+#include "World.h"
+#include "Cgdi.h"
 
 #define MAX_LOADSTRING 100
 
 // Global Variables:
-HINSTANCE hInst;                                // current instance
-WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
-WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+HINSTANCE hInst;													// current instance
+WCHAR szTitle[MAX_LOADSTRING]			= TEXT("AI Engine");		// The title bar text
+WCHAR szWindowClass[MAX_LOADSTRING]		= TEXT("AIEngine");			// the main window class name
+
+World* g_World;
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
+HWND                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
@@ -33,7 +37,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance);
 
     // Perform application initialization:
-    if (!InitInstance (hInstance, nCmdShow))
+	HWND hWnd = InitInstance(hInstance, nCmdShow);
+    if (!hWnd)
     {
         return FALSE;
     }
@@ -42,15 +47,35 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    // Main message loop:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
+	bool bDone = false;
+
+	while (!bDone)
+	{
+		// Main message loop:
+		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+			{
+				bDone = true;
+			}
+			else
+			{
+				if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+				{
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+				}
+			}
+		}
+
+		if (msg.message != WM_QUIT)
+		{
+			g_World->Update(0.1);
+			InvalidateRect(hWnd, NULL, false);
+			UpdateWindow(hWnd);
+			Sleep(2);
+		}
+	}
 
     return (int) msg.wParam;
 }
@@ -93,22 +118,20 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        In this function, we save the instance handle in a global variable and
 //        create and display the main program window.
 //
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+HWND InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_DLGFRAME,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
+   if (hWnd)
    {
-      return FALSE;
+	   ShowWindow(hWnd, nCmdShow);
+	   UpdateWindow(hWnd);
    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
-
-   return TRUE;
+   return hWnd;
 }
 
 //
@@ -123,8 +146,35 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	static int clientWidth, clientHeight;
+	static HDC hdcBackBuffer;
+	static HBITMAP hBitmap, hOldBitmap;
+
     switch (message)
     {
+	case WM_CREATE:
+		{
+			RECT rect;
+			GetClientRect(hWnd, &rect);
+			clientWidth = rect.right;
+			clientHeight = rect.bottom;
+			hdcBackBuffer = CreateCompatibleDC(NULL);
+			HDC hdc = GetDC(hWnd);
+			hBitmap = CreateCompatibleBitmap(hdc, clientWidth, clientHeight);
+			hOldBitmap = (HBITMAP)SelectObject(hdcBackBuffer, hBitmap);
+			ReleaseDC(hWnd, hdc);
+
+			g_World = new World(clientWidth, clientHeight);
+		}
+		break;
+
+	case WM_LBUTTONDOWN:
+		{
+			POINTS Position = MAKEPOINTS(lParam);
+			g_World->SetGoalPosition(Vec2(Position.x, Position.y));
+		}
+		break;
+
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -146,11 +196,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
+            
+			BitBlt(hdcBackBuffer, 0, 0, clientWidth, clientHeight, NULL, NULL, NULL, BLACKNESS);
+			gdi->StartDrawing(hdcBackBuffer);
+			g_World->Render();
+			gdi->StopDrawing(hdcBackBuffer);
+			BitBlt(ps.hdc, 0, 0, clientWidth, clientHeight, hdcBackBuffer, 0, 0, SRCCOPY);
+
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
+
+		SelectObject(hdcBackBuffer, hOldBitmap);
+		DeleteDC(hdcBackBuffer);
+		DeleteObject(hBitmap);
+
         PostQuitMessage(0);
         break;
     default:
