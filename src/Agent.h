@@ -2,9 +2,10 @@
 #include "MovingGameObject.h"
 #include "Vec2.h"
 #include <vector>
+#include <map>
 
 class World;
-class SteeringBehaviors;
+class SteeringBehavior;
 
 class Agent final : public MovingGameObject
 {
@@ -17,13 +18,18 @@ public:
 
 	inline const World* GetWorld() { return mpWorld; }
 
-	inline void SetTarget(Vec2 target) { mTarget = target; }
+	void SeekTo(const Vec2& target);
+	void FleeFrom(const Vec2& target);
 
 private:
 
+	SteeringBehavior* AddBehavior(std::uint8_t type);
+
 	World* mpWorld;
 	std::vector<Vec2> mVertices;
-	SteeringBehaviors* mSteeringBehavior;
-	Vec2 mTarget;
+
+	// Currently we're going to allow only one instance of each type of behavior
+	// to be available. We can change the design if required later.
+	std::map<std::uint8_t, SteeringBehavior*> mSteeringBehaviors;
 };
 

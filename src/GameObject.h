@@ -20,13 +20,13 @@ public:
 
 	inline int			ID() const								{ return mID; };
 
-	inline Vec2			GetPosition()							{ return mPosition; }
+	inline Vec2			GetPosition() const						{ return mPosition; }
 	inline void			SetPosition(const Vec2& position)		{ mPosition = position; }
 
-	inline double		GetBBRadius()							{ return mBoundingRadius; }
+	inline double		GetBBRadius() const						{ return mBoundingRadius; }
 	inline void			SetBBRadius(double radius)				{ mBoundingRadius = radius; }
 
-	inline Vec2 		GetScale()								{ return mScale; }
+	inline Vec2 		GetScale() const		 				{ return mScale; }
 	inline void			SetScale(const Vec2& scale)				{ mBoundingRadius *= max(scale.mX, scale.mY) / max(mScale.mX, mScale.mY); mScale = scale; }
 	inline void			SetScale(double scale)					{ mBoundingRadius *= scale / max(mScale.mX, mScale.mY); mScale = Vec2(scale, scale); }
 
