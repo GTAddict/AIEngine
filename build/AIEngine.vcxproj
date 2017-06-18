@@ -24,13 +24,16 @@
     <ClInclude Include="..\src\Cgdi.h" />
     <ClInclude Include="..\src\GameObject.h" />
     <ClInclude Include="..\src\GameObjectManager.h" />
+    <ClInclude Include="..\src\Mat3.h" />
     <ClInclude Include="..\src\Message.h" />
     <ClInclude Include="..\src\MessageQueue.h" />
     <ClInclude Include="..\src\MovingGameObject.h" />
     <ClInclude Include="..\src\PrecisionTimer.h" />
     <ClInclude Include="..\src\Resource.h" />
     <ClInclude Include="..\src\stdafx.h" />
+    <ClInclude Include="..\src\SteeringBehaviors.h" />
     <ClInclude Include="..\src\targetver.h" />
+    <ClInclude Include="..\src\Transformations.h" />
     <ClInclude Include="..\src\Utils.h" />
     <ClInclude Include="..\src\Vec2.h" />
     <ClInclude Include="..\src\World.h" />
@@ -48,6 +51,7 @@
     <ClCompile Include="..\src\Cgdi.cpp" />
     <ClCompile Include="..\src\GameObject.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
+    <ClCompile Include="..\src\Mat3.cpp" />
     <ClCompile Include="..\src\Message.cpp" />
     <ClCompile Include="..\src\MessageQueue.cpp" />
     <ClCompile Include="..\src\MovingGameObject.cpp" />
@@ -56,6 +60,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\SteeringBehaviors.cpp" />
     <ClCompile Include="..\src\Vec2.cpp" />
     <ClCompile Include="..\src\World.cpp" />
   </ItemGroup>

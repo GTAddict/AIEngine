@@ -1,7 +1,10 @@
 #pragma once
 #include "MovingGameObject.h"
+#include "Vec2.h"
+#include <vector>
 
 class World;
+class SteeringBehaviors;
 
 class Agent final : public MovingGameObject
 {
@@ -14,8 +17,13 @@ public:
 
 	inline const World* GetWorld() { return mpWorld; }
 
+	inline void SetTarget(Vec2 target) { mTarget = target; }
+
 private:
 
 	World* mpWorld;
+	std::vector<Vec2> mVertices;
+	SteeringBehaviors* mSteeringBehavior;
+	Vec2 mTarget;
 };
 

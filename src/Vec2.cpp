@@ -72,8 +72,6 @@ const Vec2& Vec2::operator/(double rhs)
 	return *this /= rhs;
 }
 
-
-
 bool Vec2::operator==(const Vec2 & rhs)
 {
 	return AreEqual(mX, rhs.mX) && AreEqual(mY, rhs.mY);
