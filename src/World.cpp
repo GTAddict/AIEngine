@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "World.h"
 #include "Agent.h"
+#include <iostream>
 
 World::World(int width, int height)
 	: mClientWidth(width)
@@ -17,10 +18,9 @@ World::World(int width, int height)
 	Vec2 Velocity;
 	double MaxSpeed = 5.0;
 	double MaxForce = 2.0;
-	double MaxTurnRate = 4.0;
+	double MaxTurnRate = 8.0;
 
 	Agent* pAgent = new Agent(this, SpawnPos, Rotation, Radius, Scale, Mass, Velocity, MaxSpeed, MaxForce, MaxTurnRate);
-	// pAgent->FleeFrom(Target2);
 	pAgent->ArriveAt(Target);
 	mAgents.push_back(pAgent);
 }

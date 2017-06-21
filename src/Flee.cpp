@@ -5,6 +5,7 @@
 Flee::Flee(const Agent& agent)
 	: SteeringBehavior(agent)
 {
+	mName = "Flee";
 }
 
 

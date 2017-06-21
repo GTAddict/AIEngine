@@ -48,3 +48,12 @@ SteeringBehavior* SteeringBehavior::Create(Type type, const Agent& agent)
 		break;
 	}
 }
+
+void SteeringBehavior::AddBehavior(Type type, const Agent& agent)
+{
+	auto foundIt = mChildBehaviors.find(type);
+	if (foundIt != mChildBehaviors.end())
+	{
+		mChildBehaviors[type] = Create(type, agent);
+	}
+}

@@ -22,9 +22,16 @@ public:
 	void FleeFrom(const Vec2& target);
 	void ArriveAt(const Vec2& target);
 
+	void StopSeek();
+	void StopFlee();
+	void StopArrive();
+
+	void SetTarget(const Vec2& target);
+
 private:
 
-	SteeringBehavior* AddBehavior(std::uint8_t type);
+	SteeringBehavior*	AddBehavior(std::uint8_t type);
+	void				RemoveBehavior(std::uint8_t type);
 
 	World* mpWorld;
 	std::vector<Vec2> mVertices;

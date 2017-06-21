@@ -78,6 +78,9 @@
     <ClInclude Include="..\src\Arrive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Pursuit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\src\ReadMe.txt" />
@@ -137,6 +140,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Arrive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pursuit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

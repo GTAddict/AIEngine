@@ -19,7 +19,7 @@ public:
 	inline			double	GetLengthSquared()	const					{ return (mX * mX) + (mY * mY); }
 
 	inline			void	Normalize()									{ *this = Vec2::Normalize(*this); }
-	static			Vec2	Normalize(Vec2 vector)						{ double length = vector.GetLength(); if (IsPositive(length)) { vector.mX /= length; vector.mY /= length; } return vector; }
+	static			Vec2	Normalize(Vec2 vector)						{ double length = vector.GetLength(); if (length > 0.0f) { vector.mX /= length; vector.mY /= length; } return vector; }
 
 	inline			double	Dot(const Vec2& rhs)	const				{ return mX * rhs.mX + mY * rhs.mY; };
 	inline			Vec2	GetPerpendicular()		const				{ return Vec2(-mY, mX); }

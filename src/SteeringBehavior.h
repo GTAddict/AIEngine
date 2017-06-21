@@ -31,14 +31,15 @@ public:
 	
 	static SteeringBehavior*	Create(Type type, const Agent& agent);
 
+	virtual const std::string&	GetName() const { return mName; }
+
+	void						AddBehavior(Type type, const Agent& agent);
+
 protected:
 
 	const Agent&										mAgent;
 	Vec2												mTargetPosition;
 	std::map<SteeringBehavior::Type, SteeringBehavior*> mChildBehaviors;
-
-private:
-
-	std::map<SteeringBehavior::Type, SteeringBehavior*> mPrototypes;
+	std::string											mName;
 };
 

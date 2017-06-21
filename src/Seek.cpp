@@ -6,6 +6,7 @@
 Seek::Seek(const Agent& agent)
 	: SteeringBehavior(agent)
 {
+	mName = "Seek";
 }
 
 Seek::~Seek()

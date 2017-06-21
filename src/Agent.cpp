@@ -72,9 +72,15 @@ void Agent::Render()
 		if (vertex.mY > rightMostBottom.mY) rightMostBottom.mY = vertex.mY;
 	}
 
+	std::string text = std::to_string(speed);
+	for (auto pair : mSteeringBehaviors)
+	{
+		text += ", " + pair.second->GetName();
+	}
+
 	gdi->GreenPen();
 	gdi->Line(mPosition, mPosition + mHeading * speed * 20);
-	gdi->TextAtPos(rightMostBottom, std::to_string(speed));
+	gdi->TextAtPos(rightMostBottom, text);
 
 	gdi->RedPen();
 	gdi->ClosedShape(AgentTransform);
@@ -93,6 +99,29 @@ void Agent::FleeFrom(const Vec2& target)
 void Agent::ArriveAt(const Vec2& target)
 {
 	AddBehavior(static_cast<std::uint8_t>(SteeringBehavior::Type::Arrive))->SetTarget(target);
+}
+
+void Agent::StopSeek()
+{
+	RemoveBehavior(static_cast<std::uint8_t>(SteeringBehavior::Type::Seek));
+}
+
+void Agent::StopFlee()
+{
+	RemoveBehavior(static_cast<std::uint8_t>(SteeringBehavior::Type::Flee));
+}
+
+void Agent::StopArrive()
+{
+	RemoveBehavior(static_cast<std::uint8_t>(SteeringBehavior::Type::Arrive));
+}
+
+void Agent::SetTarget(const Vec2& target)
+{
+	for (auto pair : mSteeringBehaviors)
+	{
+		pair.second->SetTarget(target);
+	}
 }
 
 // Returns the behavior associated with the type if one already exists,
@@ -115,4 +144,13 @@ SteeringBehavior* Agent::AddBehavior(std::uint8_t type)
 	return behavior;
 }
 
+void Agent::RemoveBehavior(std::uint8_t type)
+{
+	auto foundIt = mSteeringBehaviors.find(type);
 
+	if (foundIt != mSteeringBehaviors.end())
+	{
+		delete foundIt->second;
+		mSteeringBehaviors.erase(foundIt);
+	}
+}

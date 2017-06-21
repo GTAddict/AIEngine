@@ -49,10 +49,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 
 	PrecisionTimer timer;
-	timer.SmoothUpdatesOn();
+	// timer.SmoothUpdatesOn();
 	timer.Start();
 
 	bool bDone = false;
+
+	std::vector<double> times;
+	times.reserve(10000);
 
 	while (!bDone)
 	{
@@ -75,7 +78,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		if (msg.message != WM_QUIT)
 		{
-			g_World->Update(timer.TimeElapsed());
+			double elapsed = timer.TimeElapsed();
+			times.push_back(elapsed);
+			g_World->Update(elapsed);
 			InvalidateRect(hWnd, NULL, false);
 			UpdateWindow(hWnd);
 			Sleep(2);
@@ -179,6 +184,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			g_World->SetGoalPosition(Vec2(Position.x, Position.y));
 		}
 		break;
+
+	case WM_KEYDOWN:
+	{
+		switch (wParam)
+		{
+		case 'S': if (GetAsyncKeyState(VK_SHIFT)) { g_World->DisableSeek();	}	else { g_World->EnableSeek(); }		break;
+		case 'A': if (GetAsyncKeyState(VK_SHIFT)) { g_World->DisableArrive(); }	else { g_World->EnableArrive(); }	break;
+		case 'F': if (GetAsyncKeyState(VK_SHIFT)) { g_World->DisableFlee(); }	else { g_World->EnableFlee(); }		break;
+		}
+	}
+	break;
 
     case WM_COMMAND:
         {
