@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\Agent.h" />
     <ClInclude Include="..\src\AIEngine.h" />
+    <ClInclude Include="..\src\Arrive.h" />
     <ClInclude Include="..\src\Cgdi.h" />
     <ClInclude Include="..\src\Flee.h" />
     <ClInclude Include="..\src\GameObject.h" />
@@ -50,6 +51,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\Agent.cpp" />
     <ClCompile Include="..\src\AIEngine.cpp" />
+    <ClCompile Include="..\src\Arrive.cpp" />
     <ClCompile Include="..\src\Cgdi.cpp" />
     <ClCompile Include="..\src\Flee.cpp" />
     <ClCompile Include="..\src\GameObject.cpp" />

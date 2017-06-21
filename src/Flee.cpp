@@ -14,10 +14,12 @@ Flee::~Flee()
 
 Vec2 Flee::GetSteeringForce() const
 {
+	Vec2 force				= SteeringBehavior::GetSteeringForce();
+
 	Vec2 direction			= Vec2::Normalize(mAgent.GetPosition() - mTargetPosition);
 	Vec2 desiredVelocity	= direction * mAgent.GetMaxSpeed();
 
-	Vec2 force				= desiredVelocity - mAgent.GetVelocity();
+	force					+= desiredVelocity - mAgent.GetVelocity();
 
 	return force;
 }

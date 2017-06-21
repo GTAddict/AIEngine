@@ -57,15 +57,27 @@ void Agent::Render()
 	Vec2 heading = GetHeading();
 
 	std::vector<Vec2> AgentTransform = WorldTransform(mVertices, GetPosition(), heading, GetSide(), GetScale());
+	double speed = mVelocity.GetLength();
+	
+	gdi->WhitePen();
+	for (auto pair : mSteeringBehaviors)
+	{
+		gdi->Circle(pair.second->GetTarget(), mBoundingRadius);
+	}
+
+	Vec2 rightMostBottom;
+	for (auto vertex : AgentTransform)
+	{
+		if (vertex.mX > rightMostBottom.mX) rightMostBottom.mX = vertex.mX;
+		if (vertex.mY > rightMostBottom.mY) rightMostBottom.mY = vertex.mY;
+	}
+
+	gdi->GreenPen();
+	gdi->Line(mPosition, mPosition + mHeading * speed * 20);
+	gdi->TextAtPos(rightMostBottom, std::to_string(speed));
+
 	gdi->RedPen();
 	gdi->ClosedShape(AgentTransform);
-	//gdi->ClosedShape(mVertices);
-	 // gdi->Circle(mPosition, mBoundingRadius);
-	 gdi->WhitePen();
-	 for (auto pair : mSteeringBehaviors)
-	 {
-		 gdi->Circle(pair.second->GetTarget(), mBoundingRadius);
-	 }
 }
 
 void Agent::SeekTo(const Vec2& target)
@@ -76,6 +88,11 @@ void Agent::SeekTo(const Vec2& target)
 void Agent::FleeFrom(const Vec2& target)
 {
 	AddBehavior(static_cast<std::uint8_t>(SteeringBehavior::Type::Flee))->SetTarget(target);
+}
+
+void Agent::ArriveAt(const Vec2& target)
+{
+	AddBehavior(static_cast<std::uint8_t>(SteeringBehavior::Type::Arrive))->SetTarget(target);
 }
 
 // Returns the behavior associated with the type if one already exists,

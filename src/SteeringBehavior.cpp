@@ -2,6 +2,7 @@
 #include "SteeringBehavior.h"
 #include "Seek.h"
 #include "Flee.h"
+#include "Arrive.h"
 
 SteeringBehavior::SteeringBehavior(const Agent& agent)
 	: mAgent(agent)
@@ -10,6 +11,17 @@ SteeringBehavior::SteeringBehavior(const Agent& agent)
 
 SteeringBehavior::~SteeringBehavior()
 {
+}
+
+Vec2 SteeringBehavior::GetSteeringForce() const
+{
+	// Naive summing for now.
+	Vec2 totalForce;
+	for (auto behavior : mChildBehaviors)
+	{
+		totalForce += behavior.second->GetSteeringForce();
+	}
+	return totalForce;
 }
 
 void SteeringBehavior::SetTarget(const Vec2& target)
@@ -26,11 +38,13 @@ SteeringBehavior* SteeringBehavior::Create(Type type, const Agent& agent)
 {
 	switch (type)
 	{
-	case SteeringBehavior::Type::Seek:	return new Seek(agent);
+	case SteeringBehavior::Type::Seek:		return new Seek(agent);
 		break;
-	case SteeringBehavior::Type::Flee:	return new Flee(agent);
+	case SteeringBehavior::Type::Flee:		return new Flee(agent);
 		break;
-	default:							return nullptr;
+	case SteeringBehavior::Type::Arrive:	return new Arrive(agent);
+		break;
+	default:								return nullptr;
 		break;
 	}
 }

@@ -17,13 +17,14 @@ public:
 		Start = 1,
 		Seek = Start,
 		Flee,
+		Arrive,
 		Count
 	};
 	
 								SteeringBehavior(const Agent& agent);
 	virtual						~SteeringBehavior();
 
-	virtual Vec2				GetSteeringForce() const = 0;
+	virtual Vec2				GetSteeringForce() const;
 
 	void						SetTarget(const Vec2& target);
 	const Vec2&					GetTarget();
@@ -32,8 +33,9 @@ public:
 
 protected:
 
-	const Agent&	mAgent;
-	Vec2			mTargetPosition;
+	const Agent&										mAgent;
+	Vec2												mTargetPosition;
+	std::map<SteeringBehavior::Type, SteeringBehavior*> mChildBehaviors;
 
 private:
 

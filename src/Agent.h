@@ -20,6 +20,7 @@ public:
 
 	void SeekTo(const Vec2& target);
 	void FleeFrom(const Vec2& target);
+	void ArriveAt(const Vec2& target);
 
 private:
 

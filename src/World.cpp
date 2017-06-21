@@ -15,13 +15,13 @@ World::World(int width, int height)
 	Vec2 Scale(10.0, 10.0);
 	double Mass = 2.0;
 	Vec2 Velocity;
-	double MaxSpeed = 10.0;
+	double MaxSpeed = 5.0;
 	double MaxForce = 2.0;
 	double MaxTurnRate = 4.0;
 
 	Agent* pAgent = new Agent(this, SpawnPos, Rotation, Radius, Scale, Mass, Velocity, MaxSpeed, MaxForce, MaxTurnRate);
-	pAgent->FleeFrom(Target2);
-	pAgent->SeekTo(Target);
+	// pAgent->FleeFrom(Target2);
+	pAgent->ArriveAt(Target);
 	mAgents.push_back(pAgent);
 }
 
@@ -43,10 +43,6 @@ void World::Update(double deltaTime)
 
 void World::Render()
 {
-	// Render goal
-	//
-	////
-
 	// Render agents
 	for (auto pAgent : mAgents)
 	{
