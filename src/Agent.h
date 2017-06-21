@@ -30,7 +30,7 @@ public:
 
 private:
 
-	SteeringBehavior*	AddBehavior(std::uint8_t type);
+	SteeringBehavior*	AddBehavior(std::uint8_t type, float weight = 1.0f);
 	void				RemoveBehavior(std::uint8_t type);
 
 	World* mpWorld;

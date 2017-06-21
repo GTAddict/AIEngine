@@ -29,11 +29,16 @@ Agent::~Agent()
 void Agent::Update(double deltaTime)
 {
 	Vec2 SteeringForce;
+	float weightedSum = 0.0f;
+	for (auto pair : mSteeringBehaviors)
+	{
+		weightedSum += pair.second->GetWeight();
+	}
 
 	// This is plain old summing for now.
 	for (auto pair : mSteeringBehaviors)
 	{
-		SteeringForce += pair.second->GetSteeringForce();
+		SteeringForce += pair.second->GetSteeringForce() * pair.second->GetWeight() / weightedSum;
 	}
 
 	Vec2 Acceleration = SteeringForce / mMass;
@@ -126,7 +131,7 @@ void Agent::SetTarget(const Vec2& target)
 
 // Returns the behavior associated with the type if one already exists,
 // creates a new one otherwise.
-SteeringBehavior* Agent::AddBehavior(std::uint8_t type)
+SteeringBehavior* Agent::AddBehavior(std::uint8_t type, float weight)
 {
 	SteeringBehavior* behavior = nullptr;
 	auto foundIt = mSteeringBehaviors.find(type);
@@ -134,6 +139,7 @@ SteeringBehavior* Agent::AddBehavior(std::uint8_t type)
 	if (foundIt == mSteeringBehaviors.end())
 	{
 		behavior = SteeringBehavior::Create(static_cast<SteeringBehavior::Type>(type), *this);
+		behavior->SetWeight(weight);
 		mSteeringBehaviors[type] = behavior;
 	}
 	else

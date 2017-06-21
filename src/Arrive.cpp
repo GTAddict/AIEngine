@@ -34,7 +34,6 @@ Vec2 Arrive::GetSteeringForce() const
 	}
 	else if (distance > 0.0f)
 	{
-		// double speed = mAgent.GetVelocity().GetLengthSquared() / 2 * mDecelerationFactor;
 		double speed = distance / mDecelerationFactor;
 
 		speed = min(speed, mAgent.GetMaxSpeed());
@@ -42,10 +41,6 @@ Vec2 Arrive::GetSteeringForce() const
 		Vec2 desiredVelocity = Vec2::Normalize(vecToTarget) * speed;
 
 		force += desiredVelocity - mAgent.GetVelocity();
-	}
-	else
-	{
-		force = Vec2(0, 0);
 	}
 
 	return force;

@@ -33,7 +33,9 @@ public:
 
 	virtual const std::string&	GetName() const { return mName; }
 
-	void						AddBehavior(Type type, const Agent& agent);
+	void						AddBehavior(Type type, const Agent& agent, float weight);
+	void						SetWeight(float weight) { mWeight = weight; }
+	float						GetWeight() const { return mWeight; }
 
 protected:
 
@@ -41,5 +43,6 @@ protected:
 	Vec2												mTargetPosition;
 	std::map<SteeringBehavior::Type, SteeringBehavior*> mChildBehaviors;
 	std::string											mName;
+	float												mWeight;
 };
 

@@ -49,11 +49,13 @@ SteeringBehavior* SteeringBehavior::Create(Type type, const Agent& agent)
 	}
 }
 
-void SteeringBehavior::AddBehavior(Type type, const Agent& agent)
+void SteeringBehavior::AddBehavior(Type type, const Agent& agent, float weight)
 {
 	auto foundIt = mChildBehaviors.find(type);
 	if (foundIt != mChildBehaviors.end())
 	{
-		mChildBehaviors[type] = Create(type, agent);
+		SteeringBehavior* behavior = Create(type, agent);
+		behavior->SetWeight(weight);
+		mChildBehaviors[type] = behavior;
 	}
 }
